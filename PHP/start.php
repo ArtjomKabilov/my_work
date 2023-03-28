@@ -1,4 +1,5 @@
 <?php
+
 // Вбиваем ip и данные snmpv3
 $ip_address = "10.181.2.210";
 $username = "snmpuser";

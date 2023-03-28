@@ -2,6 +2,11 @@
 <?php
 require_once('start.php');
 
+$switch_nameOID= '1.3.6.1.2.1.47.1.1.1.1.2.3';
+$versionOID = '1.3.6.1.4.1.1916.1.1.1.14.0';
+$sysNameOID = '1.3.6.1.2.1.1.5.0';
+
+
 $switchStatusOID = '1.3.6.1.2.1.1.1.0';
 $status = $session->get($switchStatusOID,  error_reporting(0));
 if ($session->getError()) {
@@ -17,10 +22,6 @@ if ($session->getError()) {
 
     }
 }
-$oid = "1.3.6.1.4.1.1916.1.1.1.34.1.10.3";
-
-$vvv = $session->get($oid);
-print_r($vvv);
 $list = [];
 
 for ($portcount = 1001; $portcount < 1029; $portcount++){
@@ -46,6 +47,13 @@ echo "</pre>";
 /*echo "<pre>";
 print_r($numbers);
 echo "</pre>";*/
+
+
+$switch_name = $session->get($switch_nameOID);
+$version = $session->get($versionOID);
+$sysName = $session->get($sysNameOID);
+
+
 
 $counter = 28;
 function showPorts($numberList, $index) {
@@ -85,13 +93,10 @@ function showPorts($numberList, $index) {
                             <a class="nav-link active" aria-current="page" href="data.php">Vlan teave</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
+                            <a class="nav-link" href="story.php">Story</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Link</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled">Disabled</a>
                         </li>
                     </ul>
                 </div>
@@ -125,8 +130,17 @@ function showPorts($numberList, $index) {
                 padding: 2px;
             }
         </style>
-        
-        
+
+        <div class="box">
+            <div  class="col align-self-start">
+                <h5 class="card-title">System Information</h5>
+                <p><b>System Name: </b><?php print_r($sysName)?></p>
+                <p><b>Switch Name: </b><?php print_r($switch_name)?></p>
+                <p><b>System version: </b><?php print_r($version)?></p>
+
+            </div>
+        </div>
+
     </body>
 
 </html>

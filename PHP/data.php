@@ -8,11 +8,9 @@ $vlan_names_oid = '1.3.6.1.2.1.17.7.1.4.3.1.1';
 $vlan_ids_oid = '1.3.6.1.2.1.17.7.1.4.2.1.3';
 
 // OID for VLAN IP addresses
-$vlan_ips_oid = '1.3.6.1.4.1.1916.1.2.4.1.1.1';
 /// Get VLAN names, IDs, and IP addresses
 $vlan_names = $session->walk($vlan_names_oid);
 $vlan_ids = $session->walk($vlan_ids_oid);
-$vlan_ips = $session->walk($vlan_ips_oid);
 
 // Display VLAN table
 
@@ -140,7 +138,7 @@ if (isset($_POST['vlan_id2'])){
 
 function json2($vlan_id2){
     //JSON
-    $contents2 = file_get_contents("C:\Users\POPOV\Desktop\This_is_for_my_practice-main\python\data.json");
+    $contents2 = file_get_contents("C:\Users\POPOV\Desktop\This_is_for_my_practice-main\python\deletevlan.json");
 
 
     //Decode the JSON data into a PHP array.
@@ -157,26 +155,17 @@ function json2($vlan_id2){
 
     file_put_contents("C:\Users\POPOV\Desktop\This_is_for_my_practice-main\python\deletevlan.json", $jsonData2);
     
-    $output2 = shell_exec("python DeleteVlan.py ");
-    
+    $output2 = shell_exec("python DeleteVlan.py");
+    echo 'VLAN '.$vlan_id2.' removed successfully';
     
     
 
 }
 
-if (!ctype_digit($vlan_id2)) {
-    die('Invalid VLAN ID');
-  }
-  
 
-
-$result = $session->walk('iso.3.6.1.2.1.17.7.1.4.2.1.3.0.'.$vlan_id2, 'i', 6);
-if (!$result) {
-  die('Failed to remove VLAN');
-}
 
 // Display success message
-echo 'VLAN '.$vlan_id.' removed successfully';
+
 
 
 if (isset($_POST['vlan']) && isset($_POST['tag']) && isset($_POST['ip'])  && isset($_POST['mask']) && isset($_POST['port'])){
