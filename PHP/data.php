@@ -12,6 +12,8 @@ $vlan_ids_oid = '1.3.6.1.2.1.17.7.1.4.2.1.3';
 $vlan_names = $session->walk($vlan_names_oid);
 $vlan_ids = $session->walk($vlan_ids_oid);
 
+
+
 // Display VLAN table
 
 ?>
@@ -117,7 +119,7 @@ $vlan_ids = $session->walk($vlan_ids_oid);
                 if (isset($vlan_ids['1.3.6.1.2.1.17.7.1.4.2.1.3.' . $vlan_id])) {
                    
                 }
-                echo '<tr><td>' . $vlan_id . '</td><td>' . $name . '</tr>';
+                echo '<tr><td>' . $vlan_id . '</td><td>' . explode('"', $name)[1] . '</tr>';
             }
             echo '</table>';        
         ?>
@@ -138,7 +140,7 @@ if (isset($_POST['vlan_id2'])){
 
 function json2($vlan_id2){
     //JSON
-    $contents2 = file_get_contents("C:\Users\POPOV\Desktop\This_is_for_my_practice-main\python\deletevlan.json");
+    $contents2 = file_get_contents("C:\Users\artem\Desktop\my_work-main\python\deletevlan.json");
 
 
     //Decode the JSON data into a PHP array.
@@ -147,13 +149,12 @@ function json2($vlan_id2){
     //Modify the counter variable.
     $contentsDecoded2 = array(
         'id' => $vlan_id2,
-
     );
 
     $jsonData2 = json_encode($contentsDecoded2);
 
 
-    file_put_contents("C:\Users\POPOV\Desktop\This_is_for_my_practice-main\python\deletevlan.json", $jsonData2);
+    file_put_contents("C:\Users\artem\Desktop\my_work-main\python\deletevlan.json", $jsonData2);
     
     $output2 = shell_exec("python DeleteVlan.py");
     echo 'VLAN '.$vlan_id2.' removed successfully';
@@ -174,7 +175,7 @@ if (isset($_POST['vlan']) && isset($_POST['tag']) && isset($_POST['ip'])  && iss
 }
 function json($vlan, $tag, $ip, $mask, $port){
     //JSON
-    $contents = file_get_contents("C:\Users\POPOV\Desktop\This_is_for_my_practice-main\python\data.json");
+    $contents = file_get_contents("C:\Users\artem\Desktop\my_work-main\python\data.json");
 
 
     //Decode the JSON data into a PHP array.
@@ -192,7 +193,7 @@ function json($vlan, $tag, $ip, $mask, $port){
     $jsonData = json_encode($contentsDecoded);
 
 
-    file_put_contents("C:\Users\POPOV\Desktop\This_is_for_my_practice-main\python\data.json", $jsonData);
+    file_put_contents("C:\Users\artem\Desktop\my_work-main\python\data.json", $jsonData);
     
     $output = shell_exec("python VlanCreate.py ");
     

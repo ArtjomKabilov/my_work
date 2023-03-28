@@ -49,10 +49,11 @@ print_r($numbers);
 echo "</pre>";*/
 
 
-$switch_name = $session->get($switch_nameOID);
-$version = $session->get($versionOID);
-$sysName = $session->get($sysNameOID);
+$switch_name = explode('"', $session->get($switch_nameOID))[1];
+$version = explode('"', $session->get($versionOID))[1];
+$sysName = explode('"', $session->get($sysNameOID))[1];
 
+print_r($sysName);
 
 
 $counter = 28;
