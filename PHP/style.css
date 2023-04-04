@@ -56,8 +56,11 @@
     position: absolute;
     right: 0%;
   }
-  table, th, td {
-    border:1px solid black;
+table, th, td {
+  border:1px solid black;
+}
+table{
+  margin-right: auto;
 }
 .box {
   background-color: #f7f7f7;
@@ -68,5 +71,5 @@
   font-size: 14px;
   line-height: 1.4;
   color: #333;
-  text-align: center;
+  text-align: left;
 }

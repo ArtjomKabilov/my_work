@@ -14,5 +14,4 @@ $retries = 5;
 // Создвем сессию snmpv3
 $session = new SNMP(SNMP::VERSION_3, $ip_address, $username, $timeout, $retries);
 $session->setSecurity('authPriv', $auth_protocol, $auth_password, $priv_protocol, $priv_password, 'aeeeff');
-
 ?>

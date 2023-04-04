@@ -1,42 +1,72 @@
 <?php
-require_once('start.php');
-$oid = ".1.3.6.1.4.1.1916.1.24.1.1.5";
+// Вбиваем ip и данные snmpv3
+$ip_address = "10.181.2.210";
+$username = "snmpuser";
+$auth_password = "snmpauthcred";
+$auth_protocol = "MD5";
+$priv_password = "snmpprivcred";
+$priv_protocol = "DES";
+$timeout = 300000;
+$retries = 5;
 
 
 
-$switchStatusOID = '1.3.6.1.2.1.1.1.0';
-$status = $session->get($switchStatusOID,  );
-if ($session->getError()) {
-    ;
-    echo '<marquee direction="left" bgcolor="red" scrollamount="17"><div class="helpme"><h1>Kahjuks pole lüliti võrguga ühendatud, te ei näe teavet</h1></div></marquee>';
-  } else {
-    // Process switch status
-    if ($status == 'Down') {
-        
-        echo 'Kahjuks pole lüliti võrguga ühendatud, te ei näe teavet';
-    } else {
-      
 
-    }
+
+// OID constants
+define('SYS_DESCR_OID', '1.3.6.1.2.1.1.1.0');
+define('IFACE_OID', '1.3.6.1.2.1.2.2');
+define('CPU_OID', '1.3.6.1.4.1.1916.1.1.1.6');
+define('MEM_OID', '1.3.6.1.4.1.1916.1.1.1.5');
+define('POWER_OID', '1.3.6.1.4.1.1916.1.1.1.9');
+define('TEMP_OID', '1.3.6.1.4.1.1916.1.1.1.13');
+define('FAN_OID', '1.3.6.1.4.1.1916.1.1.1.8');
+
+// Function to query SNMPv3 and return the value of a specified OID
+function get_snmp_value($oid) {
+    global $ip_address, $username, $auth_password, $auth_protocol, $priv_password, $priv_protocol, $timeout, $retries;
+    $session = new SNMP(SNMP::VERSION_3, $ip_address, $username, $timeout, $retries);
+    $session->setSecurity('authPriv', $auth_protocol, $auth_password, $priv_protocol, $priv_password, 'aeeeff');
+    $value = $session->get($oid);
+    $session->close();
+    return $value;
 }
-$events = $session->walk($oid);
 
-// display the events in an HTML table
-echo "<table>";
-echo "<tr><th>Event ID</th><th>Event Name</th><th>Event Description</th></tr>";
-foreach ($events as $event) {
-    // extract the event ID and description from the OID and value
-    $event_id = substr($event, strrpos($event, ".") + 1);
-    $event_name = snmpget($ip_address, $username, ".1.3.6.1.4.1.1916.1.33.1.4.1.2.$event_id");
-    $event_desc = snmpget($ip_address, $username, ".1.3.6.1.4.1.1916.1.33.1.4.1.3.$event_id");
+// Retrieve system description
+$sys_descr = get_snmp_value(SYS_DESCR_OID);
 
-    // display the event information in the HTML table
-    echo "<tr><td>$event_id</td><td>$event_name</td><td>$event_desc</td></tr>";
+// Retrieve interface information
+$ifaces = [];
+$iface_rows = get_snmp_value(IFACE_OID . '.1');
+$num_ifaces = count($iface_rows);
+for ($i = 1; $i <= $num_ifaces; $i++) {
+    $iface_index = get_snmp_value(IFACE_OID . '.1.' . $i);
+    $iface_name = get_snmp_value(IFACE_OID . '.2.' . $i);
+    $iface_status = get_snmp_value(IFACE_OID . '.8.' . $i);
+    $iface_speed = get_snmp_value(IFACE_OID . '.5.' . $i);
+    $ifaces[] = [
+        'index' => $iface_index,
+        'name' => $iface_name,
+        'status' => $iface_status,
+        'speed' => $iface_speed
+    ];
 }
-echo "</table>";
 
+// Retrieve CPU usage
+$mem_usage = get_snmp_value(MEM_OID . '.1');
 
+// Retrieve power supply status
+$power_status = get_snmp_value(POWER_OID . '.0');
+
+// Retrieve temperature
+$temp = get_snmp_value(TEMP_OID . '.0');
+
+// Retrieve fan status
+$fan_status = get_snmp_value(FAN_OID . '.0');
+
+// HTML/CSS code for displaying information
 ?>
+
 <!DOCTYPE html>
 <html>
    
@@ -74,10 +104,55 @@ echo "</table>";
                 </div>
             </div>
         </nav>
-
-    </body>
-
+    <title>Extreme x440 G2 Switch Information</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:hover {background-color:#f5f5f5;}
+    </style>
+</head>
+<body>
+<h1>Extreme x440 G2 Switch Information</h1>
+<h2>System Description</h2>
+<p><?php echo $sys_descr; ?></p>
+<h2>Interface Information</h2>
+<table>
+    <tr>
+        <th>Index</th>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Speed</th>
+    </tr>
+    <?php foreach ($ifaces as $iface): ?>
+        <tr>
+            <td><?php echo $iface['index']; ?></td>
+            <td><?php echo $iface['name']; ?></td>
+            <td><?php echo $iface['status']; ?></td>
+            <td><?php echo $iface['speed']; ?></td>
+        </tr>
+    <?php endforeach; ?>
+</table>
+<h2>CPU Usage</h2>
+<p><?php echo $cpu_usage; ?></p>
+<h2>Memory Usage</h2>
+<p><?php echo $mem_usage; ?></p>
+<h2>Power Supply Status</h2>
+<p><?php echo $power_status; ?></p>
+<h2>Temperature</h2>
+<p><?php echo $temp; ?></p>
+<h2>Fan Status</h2>
+<p><?php echo $fan_status; ?></p>
+</body>
 </html>
+
+
 <?php
 
 

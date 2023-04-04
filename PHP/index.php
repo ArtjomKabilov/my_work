@@ -53,7 +53,6 @@ $switch_name = explode('"', $session->get($switch_nameOID))[1];
 $version = explode('"', $session->get($versionOID))[1];
 $sysName = explode('"', $session->get($sysNameOID))[1];
 
-print_r($sysName);
 
 
 $counter = 28;
@@ -84,7 +83,7 @@ function showPorts($numberList, $index) {
 
         <nav class="navbar navbar-expand-lg bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="index.php">Navbar</a>
+                <a class="navbar-brand" href="index.php">Extreme</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                 </button>
@@ -93,18 +92,15 @@ function showPorts($numberList, $index) {
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="data.php">Vlan teave</a>
                         </li>
-                        <li class="nav-item">
+                        <!--<li class="nav-item">
                             <a class="nav-link" href="story.php">Story</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                        </li>
+                        </li>-->
                     </ul>
                 </div>
             </div>
         </nav>
         <h2>Kommunikaatori pordi ühenduse olek</h2>
-        <table style="width:100%">
+        <table style="width:40%">
                             <tr>
                                 <?php                    
                                     for ($index = 0; $index < 28 ; $index++){
@@ -135,9 +131,9 @@ function showPorts($numberList, $index) {
         <div class="box">
             <div  class="col align-self-start">
                 <h5 class="card-title">System Information</h5>
-                <p><b>System Name: </b><?php print_r($sysName)?></p>
-                <p><b>Switch Name: </b><?php print_r($switch_name)?></p>
-                <p><b>System version: </b><?php print_r($version)?></p>
+                <p><b>Süsteemi nimi: </b><?php print_r($sysName)?></p>
+                <p><b>Võrgulüliti nimi: </b><?php print_r($switch_name)?></p>
+                <p><b>Süsteemi versioon: </b><?php print_r($version)?></p>
 
             </div>
         </div>

@@ -34,7 +34,7 @@ $vlan_ids = $session->walk($vlan_ids_oid);
 
         <nav class="navbar navbar-expand-lg bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="index.php">Navbar</a>
+                <a class="navbar-brand" href="index.php">Extreme</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
                 </button>
@@ -43,20 +43,14 @@ $vlan_ids = $session->walk($vlan_ids_oid);
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="data.php">Vlan teave</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled">Disabled</a>
-                        </li>
+                        <!--<li class="nav-item">
+                            <a class="nav-link" href="story.php">Story</a>
+                        </li>-->
                     </ul>
                 </div>
             </div>
         </nav>
-        <button class="btn btn-primary" id="myBtn">Loo vlan</button>
+        <button class="button" id="myBtn">Loo vlan</button>
 
         <!-- Модальном окно -->
         <div id="myModal" class="modal">
@@ -125,11 +119,51 @@ $vlan_ids = $session->walk($vlan_ids_oid);
         ?>
         <form method="POST" action="data.php">
             <input type="text" id="vlan_id2" name="vlan_id2">
-            <button  class="btn btn-primary" type="submit">Remove VLAN</button>
+            <button  class="button" type="submit">Remove VLAN</button>
         </form>
 
     </body>
-
+    <style>
+		table {
+			border-collapse: collapse;
+			width: 100%;
+			color: #333;
+			font-family: Arial, sans-serif;
+			font-size: 14px;
+			text-align: left;
+		}
+		th {
+			background-color: #008CBA;
+			color: white;
+			font-weight: bold;
+			padding: 10px;
+			border-bottom: 2px solid #ddd;
+		}
+		td {
+			padding: 10px;
+			border-bottom: 1px solid #ddd;
+		}
+		tr:hover {
+			background-color: #f5f5f5;
+		}
+        .button {
+			background-color: #008CBA;
+			border: none;
+			color: white;
+			padding: 10px 20px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			font-weight: bold;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+		}
+		.button:hover {
+			background-color: #005f6b;
+		}
+	</style>
 </html>
 <?php
 
