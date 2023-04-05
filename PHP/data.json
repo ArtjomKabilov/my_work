@@ -1,1 +1,1 @@
-{"name":"aqw","age":225,"email":"johndoe@example.com"}
+{"vlan":"vlan-225","tag":"255","ip":"10.181.21.210","mask":"24","port":"2"}

@@ -38,11 +38,10 @@ foreach ($value as $key=>$values) {
 }
 
 $numbers = [];
-echo "<pre>";
 foreach ($numberCount as $key=>$values) {
     array_push($numbers, $values[1]);
 }
-echo "</pre>";
+
 
 /*echo "<pre>";
 print_r($numbers);
@@ -74,7 +73,7 @@ function showPorts($numberList, $index) {
         <title>Switch X440 G2</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
         <link href="style.css" rel="stylesheet">
-        
+        <meta http-equiv="refresh" content="5">
   </head>
 
     <body>
@@ -99,7 +98,7 @@ function showPorts($numberList, $index) {
                 </div>
             </div>
         </nav>
-        <h2>Kommunikaatori pordi ühenduse olek</h2>
+        <h2>Kommutaatori pordi ühenduse olek</h2>
         <table style="width:40%">
                             <tr>
                                 <?php                    
@@ -130,7 +129,7 @@ function showPorts($numberList, $index) {
 
         <div class="box">
             <div  class="col align-self-start">
-                <h5 class="card-title">System Information</h5>
+                <h5 class="card-title">Süsteemi Info</h5>
                 <p><b>Süsteemi nimi: </b><?php print_r($sysName)?></p>
                 <p><b>Võrgulüliti nimi: </b><?php print_r($switch_name)?></p>
                 <p><b>Süsteemi versioon: </b><?php print_r($version)?></p>
